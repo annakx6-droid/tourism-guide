@@ -1,0 +1,43 @@
+<%- include('partials/header') %>
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-10">
+            <nav aria-label="breadcrumb" class="mb-4">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/places" class="text-success text-decoration-none">ສະຖານທີ່ທັງໝົດ</a></li>
+                    <li class="breadcrumb-item active"><%= place.name %></li>
+                </ol>
+            </nav>
+            
+            <div class="card shadow-lg border-0 overflow-hidden">
+                <img src="<%= place.image %>" class="card-img-top" alt="<%= place.name %>" style="max-height: 500px; object-fit: cover;">
+                <div class="card-body p-4">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h1 class="fw-bold m-0 text-success"><%= place.name %></h1>
+                        <span class="badge bg-success px-3 py-2"><%= place.province %></span>
+                    </div>
+                    <hr>
+                    <p class="lead text-secondary mb-4" style="line-height: 1.8;">
+                        <%= place.description %>
+                    </p>
+
+                    <div class="mt-4">
+                        <h5 class="fw-bold mb-3"><i class="bi bi-geo-alt-fill text-danger"></i> ສະຖານທີ່ຕັ້ງ (Google Maps)</h5>
+                        <% if(place.map_url) { %>
+                            <div class="ratio ratio-21x9 shadow-sm rounded border">
+                                <iframe src="<%= place.map_url %>" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                            </div>
+                        <% } else { %>
+                            <div class="alert alert-light border text-center">
+                                ຂໍອະໄພ, ຍັງບໍ່ມີຂໍ້ມູນແຜນທີ່ສຳລັບບ່ອນນີ້.
+                            </div>
+                        <% } %>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<%- include('partials/footer') %>

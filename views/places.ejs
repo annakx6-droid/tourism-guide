@@ -1,0 +1,99 @@
+<%- include('partials/header') %>
+
+<div class="container mt-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="fw-bold">📍 ສະຖານທີ່ທ່ອງທ່ຽວນິຍົມ</h2>
+        
+        <% if (isAdmin) { %>
+            <a href="/add-place" class="btn btn-primary shadow-sm">+ ເພີ່ມສະຖານທີ່ໃໝ່</a>
+        <% } %>
+    </div>
+    <!-- <div class="row mb-4 justify-content-center">
+        <div class="col-md-6">
+            <form action="/places" method="GET" class="d-flex shadow-sm">
+                <input type="text" name="search" class="form-control border-0 py-2" 
+                       placeholder="ຄົ້ນຫາຊື່ສະຖານທີ່..." value="<%= typeof searchValue !== 'undefined' ? searchValue : '' %>">
+                <button type="submit" class="btn btn-success text-nowrap">ຊອກຫາ</button>
+            </form>
+        </div>
+    </div> -->
+    <div class="row mb-4 justify-content-center">
+    <div class="col-md-8">
+        <form action="/places" method="GET" class="d-flex gap-2 shadow-sm p-2 bg-white rounded">
+            <input type="text" name="search" class="form-control border-0" placeholder="ຄົ້ນຫາຊື່..." value="<%= typeof searchValue !== 'undefined' ? searchValue : '' %>">
+            
+            <select name="province" class="form-select border-0" style="width: 200px;">
+    <option value="">ທຸກແຂວງ</option>
+    <option value="ນະຄອນຫຼວງວຽງຈັນ" <%= typeof selectedProvince !== 'undefined' && selectedProvince == 'ນະຄອນຫຼວງວຽງຈັນ' ? 'selected' : '' %>>ນະຄອນຫຼວງວຽງຈັນ</option>
+    <option value="ຜົ້ງສາລີ" <%= typeof selectedProvince !== 'undefined' && selectedProvince == 'ຜົ້ງສາລີ' ? 'selected' : '' %>>ຜົ້ງສາລີ</option>
+    <option value="ຫຼວງນ້ຳທາ" <%= typeof selectedProvince !== 'undefined' && selectedProvince == 'ຫຼວງນ້ຳທາ' ? 'selected' : '' %>>ຫຼວງນ້ຳທາ</option>
+    <option value="ອຸດົມໄຊ" <%= typeof selectedProvince !== 'undefined' && selectedProvince == 'ອຸດົມໄຊ' ? 'selected' : '' %>>ອຸດົມໄຊ</option>
+    <option value="ບໍ່ແກ້ວ" <%= typeof selectedProvince !== 'undefined' && selectedProvince == 'ບໍ່ແກ້ວ' ? 'selected' : '' %>>ບໍ່ແກ້ວ</option>
+    <option value="ຫຼວງພະບາງ" <%= typeof selectedProvince !== 'undefined' && selectedProvince == 'ຫຼວງພະບາງ' ? 'selected' : '' %>>ຫຼວງພະບາງ</option>
+    <option value="ຫົວພັນ" <%= typeof selectedProvince !== 'undefined' && selectedProvince == 'ຫົວພັນ' ? 'selected' : '' %>>ຫົວພັນ</option>
+    <option value="ໄຊຍະບູລີ" <%= typeof selectedProvince !== 'undefined' && selectedProvince == 'ໄຊຍະບູລີ' ? 'selected' : '' %>>ໄຊຍະບູລີ</option>
+    <option value="ຊຽງຂວາງ" <%= typeof selectedProvince !== 'undefined' && selectedProvince == 'ຊຽງຂວາງ' ? 'selected' : '' %>>ຊຽງຂວາງ</option>
+    <option value="ໄຊສົມບູນ" <%= typeof selectedProvince !== 'undefined' && selectedProvince == 'ໄຊສົມບູນ' ? 'selected' : '' %>>ໄຊສົມບູນ</option>
+    <option value="ວຽງຈັນ" <%= typeof selectedProvince !== 'undefined' && selectedProvince == 'ວຽງຈັນ' ? 'selected' : '' %>>ແຂວງວຽງຈັນ</option>
+    <option value="ບໍລິຄຳໄຊ" <%= typeof selectedProvince !== 'undefined' && selectedProvince == 'ບໍລິຄຳໄຊ' ? 'selected' : '' %>>ບໍລິຄຳໄຊ</option>
+    <option value="ຄຳມ່ວນ" <%= typeof selectedProvince !== 'undefined' && selectedProvince == 'ຄຳມ່ວນ' ? 'selected' : '' %>>ຄຳມ່ວນ</option>
+    <option value="ສະຫວັນນະເຂດ" <%= typeof selectedProvince !== 'undefined' && selectedProvince == 'ສະຫວັນນະເຂດ' ? 'selected' : '' %>>ສະຫວັນນະເຂດ</option>
+    <option value="ສາລະວັນ" <%= typeof selectedProvince !== 'undefined' && selectedProvince == 'ສາລະວັນ' ? 'selected' : '' %>>ສາລະວັນ</option>
+    <option value="ເຊກອງ" <%= typeof selectedProvince !== 'undefined' && selectedProvince == 'ເຊກອງ' ? 'selected' : '' %>>ເຊກອງ</option>
+    <option value="ຈຳປາສັກ" <%= typeof selectedProvince !== 'undefined' && selectedProvince == 'ຈຳປາສັກ' ? 'selected' : '' %>>ຈຳປາສັກ</option>
+    <option value="ອັດຕະປື" <%= typeof selectedProvince !== 'undefined' && selectedProvince == 'ອັດຕະປື' ? 'selected' : '' %>>ອັດຕະປື</option>
+</select>
+
+            <button type="submit" class="btn btn-success px-4">ຊອກຫາ</button>
+        </form>
+    </div>
+</div>
+
+    <div class="row">
+        <% if (placesData.length === 0) { %>
+            <div class="col-12 text-center py-5">
+                <h4 class="text-muted">❌ ບໍ່ພົບສະຖານທີ່ທີ່ທ່ານຄົ້ນຫາ</h4>
+                <a href="/places" class="btn btn-link">ເບິ່ງສະຖານທີ່ທັງໝົດ</a>
+            </div>
+        <% } %>
+
+        <% placesData.forEach(function(place) { %>
+            <% }); %>
+    </div>
+    <div class="row">
+        <% placesData.forEach(function(place) { %>
+            <div class="col-md-6 col-lg-3 mb-4">
+                <div class="card h-100 shadow-sm border-0">
+                    <img src="<%= place.image %>" class="card-img-top" alt="<%= place.name %>" style="height: 200px; object-fit: cover;">
+                    
+                    <div class="card-body">
+                        <h5 class="card-title fw-bold text-success"><%= place.name %></h5>
+                        <h6 class="text-muted small mb-2"><%= place.province %></h6>
+                        <p class="card-text text-truncate" style="max-height: 50px;"><%= place.description %></p>
+                    </div>
+
+                    <div class="card-footer bg-white border-0 pb-3">
+                        <div class="d-grid gap-2">
+                            <a href="/places/<%= place.id %>" class="btn btn-success">ລາຍລະອຽດ</a>
+                            
+                            <% if (isAdmin) { %>
+                                <div class="d-flex gap-2">
+                                    <a href="/edit-place/<%= place.id %>" class="btn btn-outline-warning flex-grow-1">
+                                        ແກ້ໄຂ
+                                    </a>
+                                    <a href="/delete-place/<%= place.id %>" 
+                                       class="btn btn-outline-danger flex-grow-1" 
+                                       onclick="return confirm('ເຈົ້າແນ່ໃຈບໍ່ວ່າຈະລຶບ?')">
+                                        ລຶບ
+                                    </a>
+                                </div>
+                            <% } %>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <% }); %>
+    </div>
+</div>
+
+<%- include('partials/footer') %>

@@ -1,0 +1,61 @@
+<%- include('partials/header') %>
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow border-0">
+                <div class="card-header bg-warning text-dark text-center">
+                    <h4 class="m-0">ແກ້ໄຂຂໍ້ມູນສະຖານທີ່</h4>
+                </div>
+                <div class="card-body p-4">
+                    <form action="/update-place/<%= place.id %>" method="POST" enctype="multipart/form-data">
+                        
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">ຊື່ສະຖານທີ່</label>
+                            <input type="text" name="name" class="form-control" value="<%= place.name %>" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">ແຂວງ</label>
+                            <select name="province" class="form-select" required>
+                                <option value="ວຽງຈັນ" <%= place.province === 'ວຽງຈັນ' ? 'selected' : '' %>>ນະຄອນຫຼວງວຽງຈັນ</option>
+                                <option value="ຫຼວງພະບາງ" <%= place.province === 'ຫຼວງພະບາງ' ? 'selected' : '' %>>ຫຼວງພະບາງ</option>
+                                <option value="ຈຳປາສັກ" <%= place.province === 'ຈຳປາສັກ' ? 'selected' : '' %>>ຈຳປາສັກ</option>
+                                <option value="ຊຽງຂວາງ" <%= place.province === 'ຊຽງຂວາງ' ? 'selected' : '' %>>ຊຽງຂວາງ</option>
+                                <option value="ວັງວຽງ" <%= place.province === 'ວັງວຽງ' ? 'selected' : '' %>>ວັງວຽງ</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold d-block">ຮູບພາບປະຈຸບັນ</label>
+                            <img src="<%= place.image %>" class="img-thumbnail mb-2" style="max-height: 150px;">
+                            
+                            <label class="form-label d-block small text-muted">ປ່ຽນຮູບໃໝ່ (ປາໄວ້ຫວ່າງໄດ້ ຖ້າບໍ່ຢາກປ່ຽນ)</label>
+                            <input type="file" name="image" class="form-control" accept="image/*">
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">ລາຍລະອຽດ</label>
+                            <textarea name="description" class="form-control" rows="4" required><%= place.description %></textarea>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Google Maps Embed URL</label>
+                            <input type="text" name="map_url" class="form-control" placeholder="Link ຈາກ Google Maps (Embed)" value="<%= place.map_url %>">
+                            <small class="text-muted d-block mt-1">ກັອບເອົາສະເພາະ Link ໃນ src="..." ຂອງ Iframe</small>
+                        </div>
+
+                        <div class="d-grid gap-2 mt-4">
+                            <button type="submit" class="btn btn-warning py-2 fw-bold">
+                                <i class="bi bi-check-circle"></i> ບັນທຶກການແກ້ໄຂ
+                            </button>
+                            <a href="/places" class="btn btn-light border">ຍົກເລີກ</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<%- include('partials/footer') %>

@@ -1,0 +1,63 @@
+<%- include('partials/header') %>
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow border-0">
+                <div class="card-header bg-success text-white text-center">
+                    <h4 class="m-0">ເພີ່ມສະຖານທີ່ທ່ອງທ່ຽວໃໝ່</h4>
+                </div>
+                <div class="card-body p-4">
+                    <form action="/add-place" method="POST" enctype="multipart/form-data">
+                        
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">ຊື່ສະຖານທີ່</label>
+                            <input type="text" name="name" class="form-control" placeholder="ເຊັ່ນ: ນໍ້າຕົກຕາດກວາງຊີ" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">ແຂວງ</label>
+                            <select name="province" class="form-select" required>
+                                <option value="" selected disabled>--- ເລືອກແຂວງ ---</option>
+                                <option value="ວຽງຈັນ">ນະຄອນຫຼວງວຽງຈັນ</option>
+                                <option value="ຫຼວງພະບາງ">ຫຼວງພະບາງ</option>
+                                <option value="ຈຳປາສັກ">ຈຳປາສັກ</option>
+                                <option value="ຊຽງຂວາງ">ຊຽງຂວາງ</option>
+                                <option value="ວັງວຽງ">ວັງວຽງ</option>
+                                </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">ຮູບພາບ</label>
+                            <input type="file" name="image" class="form-control" accept="image/*" required>
+                            <small class="text-muted">ເລືອກໄຟລ໌ຮູບພາບຈາກເຄື່ອງ (jpg, png, etc.)</small>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">ລາຍລະອຽດ</label>
+                            <textarea name="description" class="form-control" rows="4" placeholder="ອະທິບາຍກ່ຽວກັບສະຖານທີ່..." required></textarea>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Google Maps Embed URL</label>
+                            <input type="text" name="map_url" class="form-control" placeholder="ກັອບປີ້ Link ຈາກ Google Maps ມາໃສ່ນີ້">
+                            <small class="text-muted d-block mt-1">
+                                ວິທີເອົາ Link: Share > Embed a map > ກັອບເອົາສະເພາະ Link ໃນ <b>src="..."</b>
+                            </small>
+                        </div>
+
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-success py-2 shadow-sm">
+                                <i class="bi bi-save"></i> ບັນທຶກຂໍ້ມູນ
+                            </button>
+                            <a href="/places" class="btn btn-light border">ຍົກເລີກ</a>
+                        </div>
+                        
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<%- include('partials/footer') %>

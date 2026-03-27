@@ -1,0 +1,39 @@
+/* ປັບແຕ່ງ Hero Section */
+.hero-section {
+    background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)),
+    url('https://media.audleytravel.com/-/media/images/home/southeast-asia/laos/country-guides/first-timers-guide-to-laos/istock_000075968035kasidistrictvientiane.jpg?q=60&w=1920&h=685');
+    background-size: cover;
+    background-position: center;
+    color: white;
+}
+
+/* ປັບແຕ່ງ Card ໃຫ້ມີ Effect ເລັກນ້ອຍ */
+.card {
+    transition: transform 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+body {
+    font-family: 'Noto Sans Lao', sans-serif;
+    background-color: #f8f9fa;
+}
+
+.card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1) !important;
+}
+
+.breadcrumb-item + .breadcrumb-item::before {
+    content: ">";
+}
+/* ປັບແຕ່ງ Footer */
+footer {
+    margin-top: auto;
+}
