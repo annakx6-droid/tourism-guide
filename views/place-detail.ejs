@@ -11,7 +11,42 @@
             </nav>
             
             <div class="card shadow-lg border-0 overflow-hidden">
-                <img src="<%= place.image %>" class="card-img-top" alt="<%= place.name %>" style="max-height: 500px; object-fit: cover;">
+               <div id="placeCarousel" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-indicators">
+                <% if (images && images.length > 0) { %>
+                    <% images.forEach((img, index) => { %>
+                        <button type="button" data-bs-target="#placeCarousel" data-bs-slide-to="<%= index %>" class="<%= index === 0 ? 'active' : '' %>" aria-current="<%= index === 0 ? 'true' : '' %>"></button>
+                    <% }); %>
+                <% } %>
+            </div>
+            
+<div class="carousel-inner">
+    <% if (images && images.length > 0) { %>
+        <% images.forEach((img, index) => { %>
+            <div class="carousel-item <%= index === 0 ? 'active' : '' %>">
+                <img src="/<%= img.image_url.replace(/^\/+/, '') %>" 
+                     class="d-block w-100"
+                     style="max-height: 500px; object-fit: cover;">
+            </div>
+        <% }); %>
+    <% } else { %>
+        <div class="carousel-item active">
+            <img src="/<%= place.image.replace(/^\/+/, '') %>" 
+                 class="d-block w-100"
+                 style="max-height: 500px; object-fit: cover;">
+        </div>
+    <% } %>
+</div>
+
+    <button class="carousel-control-prev" type="button" data-bs-target="#placeCarousel" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#placeCarousel" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+    </button>
+</div>
                 <div class="card-body p-4">
                     <div class="d-flex justify-content-between align-items-center mb-3">
                         <h1 class="fw-bold m-0 text-success"><%= place.name %></h1>
