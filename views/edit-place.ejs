@@ -39,12 +39,16 @@
                             </select>
                         </div>
 
-                        <div class="mb-3">
+                      <div class="mb-3">
                             <label class="form-label fw-bold d-block">ຮູບພາບປະຈຸບັນ</label>
-                            <img src="<%= place.image %>" class="img-thumbnail mb-2" style="max-height: 150px;">
+                            <div class="d-flex flex-wrap gap-2 mb-2">
+                                <% if (place.image) { %>
+                                    <img src="<%= place.image %>" class="img-thumbnail" style="height: 80px; width: 80px; object-fit: cover;">
+                                <% } %>
+                            </div>
                             
-                            <label class="form-label d-block small text-muted">ປ່ຽນຮູບໃໝ່ (ປາໄວ້ຫວ່າງໄດ້ ຖ້າບໍ່ຢາກປ່ຽນ)</label>
-                            <input type="file" name="image" class="form-control" accept="image/*">
+                            <label class="form-label d-block small text-muted">ເລືອກຮູບໃໝ່ (ເລືອກໄດ້ຫຼາຍຮູບ, ຖ້າເລືອກໃໝ່ຮູບເກົ່າຈະຖືກປ່ຽນ)</label>
+                            <input type="file" name="images" class="form-control" accept="image/*" multiple>
                         </div>
 
                         <div class="mb-3">

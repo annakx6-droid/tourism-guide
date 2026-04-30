@@ -189,17 +189,34 @@ app.get('/edit-place/:id', isAdminMode, (req, res) => {
     });
 });
 
-app.post('/update-place/:id', isAdminMode, upload.single('image'), (req, res) => {
+app.post('/update-place/:id', isAdminMode, upload.array('images', 10), (req, res) => {
     const { name, province, description, map_url } = req.body;
     const id = req.params.id;
-    if (req.file) {
-        const imagePath = '/uploads/' + req.file.filename;
-        const sql = 'UPDATE places SET name = ?, province = ?, description = ?, image = ?, map_url = ? WHERE id = ?';
-        db.query(sql, [name, province, description, imagePath, map_url, id], (err, result) => {
+
+    if (req.files && req.files.length > 0) {
+        // 1. ໃຊ້ຮູບທຳອິດເປັນຮູບໜ້າປົກ (ຄືກັນກັບຕອນ Add)
+        const mainImagePath = '/uploads/' + req.files[0].filename;
+
+        const sqlPlace = 'UPDATE places SET name = ?, province = ?, description = ?, image = ?, map_url = ? WHERE id = ?';
+        db.query(sqlPlace, [name, province, description, mainImagePath, map_url, id], (err, result) => {
             if (err) throw err;
-            res.redirect('/places');
+
+            // 2. ລຶບຮູບເກົ່າໃນ Gallery ອອກກ່ອນ ແລ້ວແທນທີ່ດ້ວຍຮູບໃໝ່
+            const sqlDelGallery = 'DELETE FROM place_images WHERE place_id = ?';
+            db.query(sqlDelGallery, [id], (err) => {
+                if (err) throw err;
+
+                // 3. ເພີ່ມຮູບໃໝ່ທັງໝົດລົງໃນ Gallery (Table: place_images)
+                const galleryData = req.files.map(file => [id, '/uploads/' + file.filename]);
+                const sqlInsertGallery = 'INSERT INTO place_images (place_id, image_url) VALUES ?';
+                db.query(sqlInsertGallery, [galleryData], (err) => {
+                    if (err) throw err;
+                    res.redirect('/places');
+                });
+            });
         });
     } else {
+        // ຖ້າບໍ່ມີການເລືອກຮູບໃໝ່ ໃຫ້ອັບເດດແຕ່ຂໍ້ມູນຕົວໜັງສື
         const sql = 'UPDATE places SET name = ?, province = ?, description = ?, map_url = ? WHERE id = ?';
         db.query(sql, [name, province, description, map_url, id], (err, result) => {
             if (err) throw err;
