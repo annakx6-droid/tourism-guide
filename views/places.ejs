@@ -9,12 +9,11 @@
         <% } %>
     </div>
 
-    <!-- SEARCH -->
-    <div class="row mb-4 justify-content-center">
+    <div class="row mb-3 justify-content-center">
         <div class="col-md-8">
             <form action="/places" method="GET" class="d-flex gap-2 shadow-sm p-2 bg-white rounded">
                 
-                   <input type="text" 
+                <input type="text" 
                        name="search" 
                        class="form-control border-0" 
                        placeholder="ຄົ້ນຫາຊື່..." 
@@ -23,58 +22,74 @@
 
                 <select name="province" class="form-select border-0" style="width: 200px;" id="provinceSelect">
                     <option value="">ທຸກແຂວງ</option>
-                            <option value="ນະຄອນຫຼວງ" <%= typeof selectedProvince !== 'undefined' && selectedProvince == 'ນະຄອນຫຼວງ' ? 'selected' : '' %>>ນະຄອນຫຼວງ</option>
-                            <option value="ຜົ້ງສາລີ" <%= typeof selectedProvince !== 'undefined' && selectedProvince == 'ຜົ້ງສາລີ' ? 'selected' : '' %>>ຜົ້ງສາລີ</option>
-                            <option value="ຫຼວງນ້ຳທາ" <%= typeof selectedProvince !== 'undefined' && selectedProvince == 'ຫຼວງນ້ຳທາ' ? 'selected' : '' %>>ຫຼວງນ້ຳທາ</option>
-                            <option value="ອຸດົມໄຊ" <%= typeof selectedProvince !== 'undefined' && selectedProvince == 'ອຸດົມໄຊ' ? 'selected' : '' %>>ອຸດົມໄຊ</option>
-                            <option value="ບໍ່ແກ້ວ" <%= typeof selectedProvince !== 'undefined' && selectedProvince == 'ບໍ່ແກ້ວ' ? 'selected' : '' %>>ບໍ່ແກ້ວ</option>
-                            <option value="ຫຼວງພະບາງ" <%= typeof selectedProvince !== 'undefined' && selectedProvince == 'ຫຼວງພະບາງ' ? 'selected' : '' %>>ຫຼວງພະບາງ</option>
-                            <option value="ຫົວພັນ" <%= typeof selectedProvince !== 'undefined' && selectedProvince == 'ຫົວພັນ' ? 'selected' : '' %>>ຫົວພັນ</option>
-                            <option value="ໄຊຍະບູລີ" <%= typeof selectedProvince !== 'undefined' && selectedProvince == 'ໄຊຍະບູລີ' ? 'selected' : '' %>>ໄຊຍະບູລີ</option>
-                            <option value="ຊຽງຂວາງ" <%= typeof selectedProvince !== 'undefined' && selectedProvince == 'ຊຽງຂວາງ' ? 'selected' : '' %>>ຊຽງຂວາງ</option>
-                            <option value="ໄຊສົມບູນ" <%= typeof selectedProvince !== 'undefined' && selectedProvince == 'ໄຊສົມບູນ' ? 'selected' : '' %>>ໄຊສົມບູນ</option>
-                            <option value="ວຽງຈັນ" <%= typeof selectedProvince !== 'undefined' && selectedProvince == 'ວຽງຈັນ' ? 'selected' : '' %>>ແຂວງວຽງຈັນ</option>
-                            <option value="ບໍລິຄຳໄຊ" <%= typeof selectedProvince !== 'undefined' && selectedProvince == 'ບໍລິຄຳໄຊ' ? 'selected' : '' %>>ບໍລິຄຳໄຊ</option>
-                            <option value="ຄຳມ່ວນ" <%= typeof selectedProvince !== 'undefined' && selectedProvince == 'ຄຳມ່ວນ' ? 'selected' : '' %>>ຄຳມ່ວນ</option>
-                            <option value="ສະຫວັນນະເຂດ" <%= typeof selectedProvince !== 'undefined' && selectedProvince == 'ສະຫວັນນະເຂດ' ? 'selected' : '' %>>ສະຫວັນນະເຂດ</option>
-                            <option value="ສາລະວັນ" <%= typeof selectedProvince !== 'undefined' && selectedProvince == 'ສາລະວັນ' ? 'selected' : '' %>>ສາລະວັນ</option>
-                            <option value="ເຊກອງ" <%= typeof selectedProvince !== 'undefined' && selectedProvince == 'ເຊກອງ' ? 'selected' : '' %>>ເຊກອງ</option>
-                            <option value="ຈຳປາສັກ" <%= typeof selectedProvince !== 'undefined' && selectedProvince == 'ຈຳປາສັກ' ? 'selected' : '' %>>ຈຳປາສັກ</option>
-                            <option value="ອັດຕະປື" <%= typeof selectedProvince !== 'undefined' && selectedProvince == 'ອັດຕະປື' ? 'selected' : '' %>>ອັດຕະປື</option>
+                    <option value="ນະຄອນຫຼວງ" <%= typeof selectedProvince !== 'undefined' && selectedProvince == 'ນະຄອນຫຼວງ' ? 'selected' : '' %>>ນະຄອນຫຼວງ</option>
+                    <option value="ຜົ້ງສາລີ" <%= typeof selectedProvince !== 'undefined' && selectedProvince == 'ຜົ້ງສາລີ' ? 'selected' : '' %>>ຜົ້ງສາລີ</option>
+                    <option value="ຫຼວງນ້ຳທາ" <%= typeof selectedProvince !== 'undefined' && selectedProvince == 'ຫຼວງນ້ຳທາ' ? 'selected' : '' %>>ຫຼວງນ້ຳທາ</option>
+                    <option value="ອຸດົມໄຊ" <%= typeof selectedProvince !== 'undefined' && selectedProvince == 'ອຸດົມໄຊ' ? 'selected' : '' %>>ອຸດົມໄຊ</option>
+                    <option value="ບໍ່ແກ້ວ" <%= typeof selectedProvince !== 'undefined' && selectedProvince == 'ບໍ່ແກ້ວ' ? 'selected' : '' %>>ບໍ່ແກ້ວ</option>
+                    <option value="ຫຼວງພະບາງ" <%= typeof selectedProvince !== 'undefined' && selectedProvince == 'ຫຼວງພະບາງ' ? 'selected' : '' %>>ຫຼວງພະບາງ</option>
+                    <option value="ຫົວພັນ" <%= typeof selectedProvince !== 'undefined' && selectedProvince == 'ຫົວພັນ' ? 'selected' : '' %>>ຫົວພັນ</option>
+                    <option value="ໄຊຍະບູລີ" <%= typeof selectedProvince !== 'undefined' && selectedProvince == 'ໄຊຍະບູລີ' ? 'selected' : '' %>>ໄຊຍະບູລີ</option>
+                    <option value="ຊຽງຂວາງ" <%= typeof selectedProvince !== 'undefined' && selectedProvince == 'ຊຽງຂວາງ' ? 'selected' : '' %>>ຊຽງຂວາງ</option>
+                    <option value="ໄຊສົມບູນ" <%= typeof selectedProvince !== 'undefined' && selectedProvince == 'ໄຊສົມບູນ' ? 'selected' : '' %>>ໄຊສົມບູນ</option>
+                    <option value="ວຽງຈັນ" <%= typeof selectedProvince !== 'undefined' && selectedProvince == 'ວຽງຈັນ' ? 'selected' : '' %>>ແຂວງວຽງຈັນ</option>
+                    <option value="ບໍລິຄຳໄຊ" <%= typeof selectedProvince !== 'undefined' && selectedProvince == 'ບໍລິຄຳໄຊ' ? 'selected' : '' %>>ບໍລິຄຳໄຊ</option>
+                    <option value="ຄຳມ່ວນ" <%= typeof selectedProvince !== 'undefined' && selectedProvince == 'ຄຳມ່ວນ' ? 'selected' : '' %>>ຄຳມ່ວນ</option>
+                    <option value="ສະຫວັນນະເຂດ" <%= typeof selectedProvince !== 'undefined' && selectedProvince == 'ສະຫວັນນະເຂດ' ? 'selected' : '' %>>ສະຫວັນນະເຂດ</option>
+                    <option value="ສາລະວັນ" <%= typeof selectedProvince !== 'undefined' && selectedProvince == 'ສາລະວັນ' ? 'selected' : '' %>>ສາລະວັນ</option>
+                    <option value="ເຊກອງ" <%= typeof selectedProvince !== 'undefined' && selectedProvince == 'ເຊກອງ' ? 'selected' : '' %>>ເຊກອງ</option>
+                    <option value="ຈຳປາສັກ" <%= typeof selectedProvince !== 'undefined' && selectedProvince == 'ຈຳປາສັກ' ? 'selected' : '' %>>ຈຳປາສັກ</option>
+                    <option value="ອັດຕະປື" <%= typeof selectedProvince !== 'undefined' && selectedProvince == 'ອັດຕະປື' ? 'selected' : '' %>>ອັດຕະປື</option>
                 </select>
 
-                <button class="btn btn-success">ຊອກຫາ</button>
+                <button type="submit" class="btn btn-success">ຊອກຫາ</button>
             </form>
         </div>
     </div>
 
-    <!-- NO DATA -->
+    <div class="container mb-4">
+        <div class="d-flex justify-content-center gap-2 flex-wrap">
+            <a href="/places" 
+               class="btn <%= (typeof selectedCategory == 'undefined' || !selectedCategory) ? 'btn-dark' : 'btn-outline-dark' %> rounded-pill px-4">
+               ທັງໝົດ
+            </a>
+            <a href="/places?category=ວັດທະນາທຳ" 
+               class="btn <%= (typeof selectedCategory !== 'undefined' && selectedCategory == 'ວັດທະນາທຳ') ? 'btn-primary' : 'btn-outline-primary' %> rounded-pill px-4">
+               🏛️ ວັດທະນາທຳ
+            </a>
+            <a href="/places?category=ທຳມະຊາດ" 
+               class="btn <%= (typeof selectedCategory !== 'undefined' && selectedCategory == 'ທຳມະຊາດ') ? 'btn-success' : 'btn-outline-success' %> rounded-pill px-4">
+               🌳 ທຳມະຊາດ
+            </a>
+        </div>
+    </div>
+
     <% if (placesData.length === 0) { %>
         <div class="text-center py-5">
             <h4 class="text-muted">❌ ບໍ່ພົບຂໍ້ມູນ</h4>
         </div>
     <% } %>
 
-    <!-- CARD -->
     <div class="row">
         <% placesData.forEach(function(place) { %>
             <div class="col-md-6 col-lg-3 mb-4">
-
                 <div class="card h-100 shadow-sm border-0 d-flex flex-column">
-
-                    <!-- CLICK -->
                     <a href="/places/<%= place.id %>" style="text-decoration:none; color:inherit;">
-                        <img src="<%= place.image %>" 
-                             class="card-img-top"
-                             style="height:200px; object-fit:cover;">
+                        <div class="position-relative">
+                            <img src="<%= place.image %>" 
+                                 class="card-img-top"
+                                 style="height:200px; object-fit:cover;">
+                            <span class="badge position-absolute top-0 end-0 m-2 <%= place.category == 'ທຳມະຊາດ' ? 'bg-success' : 'bg-primary' %>">
+                                <%= place.category %>
+                            </span>
+                        </div>
 
                         <div class="card-body">
-                            <h5 class="fw-bold text-success"><%= place.name %></h5>
-                            <small class="text-muted"><%= place.province %></small>
+                            <h5 class="fw-bold text-success mb-1"><%= place.name %></h5>
+                            <small class="text-muted"><i class="bi bi-geo-alt"></i> <%= place.province %></small>
                         </div>
                     </a>
 
-                    <!-- BUTTON (ຢູ່ຂ້າງລຸ່ມສວຍໆ) -->
                     <div class="card-footer bg-white border-0 mt-auto">
                         <div class="d-grid gap-2">
                             <a href="/places/<%= place.id %>" class="btn btn-success">
@@ -96,19 +111,36 @@
                             <% } %>
                         </div>
                     </div>
-
                 </div>
-
             </div>
         <% }); %>
     </div>
 </div>
-<!-- ⚡ AUTO SEARCH -->
+
 <script>
 let timeout = null;
 
 const searchInput = document.getElementById('searchInput');
 const provinceSelect = document.getElementById('provinceSelect');
+
+// ຟັງຊັນສຳລັບດຶງຄ່າ Category ຈາກ URL ປະຈຸບັນ
+function getCategoryFromUrl() {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get('category') || '';
+}
+
+function runSearch() {
+    const keyword = searchInput.value;
+    const province = provinceSelect.value;
+    const category = getCategoryFromUrl(); // ຮັກສາຄ່າ Category ໄວ້ເວລາ Search
+
+    let url = `/places?search=${encodeURIComponent(keyword)}&province=${encodeURIComponent(province)}`;
+    if (category) {
+        url += `&category=${encodeURIComponent(category)}`;
+    }
+    
+    window.location.href = url;
+}
 
 searchInput.addEventListener('input', function() {
     clearTimeout(timeout);
@@ -116,13 +148,6 @@ searchInput.addEventListener('input', function() {
 });
 
 provinceSelect.addEventListener('change', runSearch);
-
-function runSearch() {
-    const keyword = searchInput.value;
-    const province = provinceSelect.value;
-
-    window.location.href = `/places?search=${keyword}&province=${province}`;
-}
 </script>
 
 <%- include('partials/footer') %>

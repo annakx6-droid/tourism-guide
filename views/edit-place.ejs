@@ -15,27 +15,34 @@
                             <input type="text" name="name" class="form-control" value="<%= place.name %>" required>
                         </div>
 
-                        <div class="mb-3">
+                                                <div class="mb-3">
                             <label class="form-label fw-bold">ແຂວງ</label>
-                            <select name="province" class="form-select" required>  
-                            <option value="ນະຄອນຫຼວງ" <%= typeof selectedProvince !== 'undefined' && selectedProvince == 'ນະຄອນຫຼວງ' ? 'selected' : '' %>>ນະຄອນຫຼວງ</option>
-                            <option value="ຜົ້ງສາລີ" <%= typeof selectedProvince !== 'undefined' && selectedProvince == 'ຜົ້ງສາລີ' ? 'selected' : '' %>>ຜົ້ງສາລີ</option>
-                            <option value="ຫຼວງນ້ຳທາ" <%= typeof selectedProvince !== 'undefined' && selectedProvince == 'ຫຼວງນ້ຳທາ' ? 'selected' : '' %>>ຫຼວງນ້ຳທາ</option>
-                            <option value="ອຸດົມໄຊ" <%= typeof selectedProvince !== 'undefined' && selectedProvince == 'ອຸດົມໄຊ' ? 'selected' : '' %>>ອຸດົມໄຊ</option>
-                            <option value="ບໍ່ແກ້ວ" <%= typeof selectedProvince !== 'undefined' && selectedProvince == 'ບໍ່ແກ້ວ' ? 'selected' : '' %>>ບໍ່ແກ້ວ</option>
-                            <option value="ຫຼວງພະບາງ" <%= typeof selectedProvince !== 'undefined' && selectedProvince == 'ຫຼວງພະບາງ' ? 'selected' : '' %>>ຫຼວງພະບາງ</option>
-                            <option value="ຫົວພັນ" <%= typeof selectedProvince !== 'undefined' && selectedProvince == 'ຫົວພັນ' ? 'selected' : '' %>>ຫົວພັນ</option>
-                            <option value="ໄຊຍະບູລີ" <%= typeof selectedProvince !== 'undefined' && selectedProvince == 'ໄຊຍະບູລີ' ? 'selected' : '' %>>ໄຊຍະບູລີ</option>
-                            <option value="ຊຽງຂວາງ" <%= typeof selectedProvince !== 'undefined' && selectedProvince == 'ຊຽງຂວາງ' ? 'selected' : '' %>>ຊຽງຂວາງ</option>
-                            <option value="ໄຊສົມບູນ" <%= typeof selectedProvince !== 'undefined' && selectedProvince == 'ໄຊສົມບູນ' ? 'selected' : '' %>>ໄຊສົມບູນ</option>
-                            <option value="ວຽງຈັນ" <%= typeof selectedProvince !== 'undefined' && selectedProvince == 'ວຽງຈັນ' ? 'selected' : '' %>>ແຂວງວຽງຈັນ</option>
-                            <option value="ບໍລິຄຳໄຊ" <%= typeof selectedProvince !== 'undefined' && selectedProvince == 'ບໍລິຄຳໄຊ' ? 'selected' : '' %>>ບໍລິຄຳໄຊ</option>
-                            <option value="ຄຳມ່ວນ" <%= typeof selectedProvince !== 'undefined' && selectedProvince == 'ຄຳມ່ວນ' ? 'selected' : '' %>>ຄຳມ່ວນ</option>
-                            <option value="ສະຫວັນນະເຂດ" <%= typeof selectedProvince !== 'undefined' && selectedProvince == 'ສະຫວັນນະເຂດ' ? 'selected' : '' %>>ສະຫວັນນະເຂດ</option>
-                            <option value="ສາລະວັນ" <%= typeof selectedProvince !== 'undefined' && selectedProvince == 'ສາລະວັນ' ? 'selected' : '' %>>ສາລະວັນ</option>
-                            <option value="ເຊກອງ" <%= typeof selectedProvince !== 'undefined' && selectedProvince == 'ເຊກອງ' ? 'selected' : '' %>>ເຊກອງ</option>
-                            <option value="ຈຳປາສັກ" <%= typeof selectedProvince !== 'undefined' && selectedProvince == 'ຈຳປາສັກ' ? 'selected' : '' %>>ຈຳປາສັກ</option>
-                            <option value="ອັດຕະປື" <%= typeof selectedProvince !== 'undefined' && selectedProvince == 'ອັດຕະປື' ? 'selected' : '' %>>ອັດຕະປື</option>
+                            <select name="province" class="form-select" required> 
+                                <option value="ນະຄອນຫຼວງ" <%= place.province == 'ນະຄອນຫຼວງ' ? 'selected' : '' %>>ນະຄອນຫຼວງ</option>
+                                <option value="ຜົ້ງສາລີ" <%= place.province == 'ຜົ້ງສາລີ' ? 'selected' : '' %>>ຜົ້ງສາລີ</option>
+                                <option value="ຫຼວງນ້ຳທາ" <%= place.province == 'ຫຼວງນ້ຳທາ' ? 'selected' : '' %>>ຫຼວງນ້ຳທາ</option>
+                                <option value="ອຸດົມໄຊ" <%= place.province == 'ອຸດົມໄຊ' ? 'selected' : '' %>>ອຸດົມໄຊ</option>
+                                <option value="ບໍ່ແກ້ວ" <%= place.province == 'ບໍ່ແກ້ວ' ? 'selected' : '' %>>ບໍ່ແກ້ວ</option>
+                                <option value="ຫຼວງພະບາງ" <%= place.province == 'ຫຼວງພະບາງ' ? 'selected' : '' %>>ຫຼວງພະບາງ</option>
+                                <option value="ຫົວພັນ" <%= place.province == 'ຫົວພັນ' ? 'selected' : '' %>>ຫົວພັນ</option>
+                                <option value="ໄຊຍະບູລີ" <%= place.province == 'ໄຊຍະບູລີ' ? 'selected' : '' %>>ໄຊຍະບູລີ</option>
+                                <option value="ຊຽງຂວາງ" <%= place.province == 'ຊຽງຂວາງ' ? 'selected' : '' %>>ຊຽງຂວາງ</option>
+                                <option value="ໄຊສົມບູນ" <%= place.province == 'ໄຊສົມບູນ' ? 'selected' : '' %>>ໄຊສົມບູນ</option>
+                                <option value="ວຽງຈັນ" <%= place.province == 'ວຽງຈັນ' ? 'selected' : '' %>>ແຂວງວຽງຈັນ</option>
+                                <option value="ບໍລິຄຳໄຊ" <%= place.province == 'ບໍລິຄຳໄຊ' ? 'selected' : '' %>>ບໍລິຄຳໄຊ</option>
+                                <option value="ຄຳມ່ວນ" <%= place.province == 'ຄຳມ່ວນ' ? 'selected' : '' %>>ຄຳມ່ວນ</option>
+                                <option value="ສະຫວັນນະເຂດ" <%= place.province == 'ສະຫວັນນະເຂດ' ? 'selected' : '' %>>ສະຫວັນນະເຂດ</option>
+                                <option value="ສາລະວັນ" <%= place.province == 'ສາລະວັນ' ? 'selected' : '' %>>ສາລະວັນ</option>
+                                <option value="ເຊກອງ" <%= place.province == 'ເຊກອງ' ? 'selected' : '' %>>ເຊກອງ</option>
+                                <option value="ຈຳປາສັກ" <%= place.province == 'ຈຳປາສັກ' ? 'selected' : '' %>>ຈຳປາສັກ</option>
+                                <option value="ອັດຕະປື" <%= place.province == 'ອັດຕະປື' ? 'selected' : '' %>>ອັດຕະປື</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">ໝວດໝູ່</label>
+                            <select name="category" class="form-select" required>
+                                <option value="ວັດທະນາທຳ" <%= (typeof place !== 'undefined' && place.category == 'ວັດທະນາທຳ') ? 'selected' : '' %>>ວັດທະນາທຳ</option>
+                                <option value="ທຳມະຊາດ" <%= (typeof place !== 'undefined' && place.category == 'ທຳມະຊາດ') ? 'selected' : '' %>>ແຫຼ່ງທ່ອງທ່ຽວທຳມະຊາດ</option>
                             </select>
                         </div>
 

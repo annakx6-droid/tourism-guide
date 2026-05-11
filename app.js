@@ -83,10 +83,14 @@ app.get('/logout', (req, res) => {
     res.redirect('/places');
 });
 
-// ໜ້າສະຖານທີ່ທັງໝົດ
+
+
+// ✅ GET /places - ອັນດຽວທີ່ມີ filter ຄົບຖ້ວນ
 app.get('/places', (req, res) => {
     const keyword = req.query.search || ''; 
     const province = req.query.province || '';
+    const category = req.query.category || '';
+    
     let sql = "SELECT * FROM places WHERE name LIKE ?";
     let params = [`%${keyword}%`];
 
@@ -94,79 +98,114 @@ app.get('/places', (req, res) => {
         sql += " AND province = ?";
         params.push(province);
     }
+    if (category) {
+        sql += " AND category = ?";
+        params.push(category);
+    }
 
     db.query(sql, params, (err, results) => {
-        if (err) throw err;
+        if (err) {
+            console.error('Query error:', err);
+            return res.status(500).send('Database error');
+        }
         res.render('places', { 
             title: 'ສະຖານທີ່ທ່ອງທ່ຽວ', 
             active: 'places', 
             placesData: results,
             isAdmin: req.session.isAdmin,
             searchValue: keyword,
-            selectedProvince: province 
+            selectedProvince: province,
+            selectedCategory: category
         });
     });
 });
-
-// ໜ້າລາຍລະອຽດ (ດຶງຂໍ້ມູນຮູບຈາກ Table Gallery ມາສະແດງ)
-app.get('/places/:id', (req, res) => {
-    const placeId = req.params.id;
-    const sqlPlace = 'SELECT * FROM places WHERE id = ?';
-    
-    db.query(sqlPlace, [placeId], (err, placeResult) => {
-        if (err) throw err;
-        if (placeResult.length > 0) {
-            const sqlImages = 'SELECT * FROM place_images WHERE place_id = ?';
-            db.query(sqlImages, [placeId], (err, imageResults) => {
-                if (err) throw err;
-                res.render('place-detail', { 
-                    title: placeResult[0].name, 
-                    active: 'places', 
-                    place: placeResult[0],
-                    images: imageResults 
-                });
-            });
-        } else {
-            res.status(404).send('ບໍ່ພົບຂໍ້ມູນ');
-        }
+// ✅ ໜ້າເພີ່ມສະຖານທີ່ໃໝ່ (GET)
+app.get('/add-place', isAdminMode, (req, res) => {
+    res.render('add-place', { 
+        title: 'ເພີ່ມສະຖານທີ່ໃໝ່', 
+        active: 'places',
+        isAdmin: req.session.isAdmin
     });
 });
 
-// --- ສ່ວນຈັດການຂໍ້ມູນ (Admin Only) ---
-
-app.get('/add-place', isAdminMode, (req, res) => {
-    res.render('add-place', { title: 'ເພີ່ມສະຖານທີ່', active: 'places' });
-});
-
-// ⭐ ປັບປຸງໃໝ່: ອັບໂຫລດຫຼາຍຮູບ (ໃຊ້ upload.array)
+// --- ປັບປຸງການເພີ່ມຂໍ້ມູນ (INSERT) ---
 app.post('/add-place', isAdminMode, upload.array('images', 10), (req, res) => {
-    const { name, province, description, map_url } = req.body;
+    const { name, province, description, map_url, category } = req.body; // ເພີ່ມ category
     
     if (!req.files || req.files.length === 0) {
         return res.status(400).send('ກະລຸນາເລືອກຮູບພາບຢ່າງໜ້ອຍ 1 ຮູບ');
     }
 
-    // ໃຊ້ຮູບທຳອິດເປັນຮູບໜ້າປົກໃນ table places
     const mainImagePath = '/uploads/' + req.files[0].filename;
 
-    const sqlPlace = 'INSERT INTO places (name, province, description, image, map_url) VALUES (?, ?, ?, ?, ?)';
-    db.query(sqlPlace, [name, province, description, mainImagePath, map_url], (err, result) => {
+    const sqlPlace = 'INSERT INTO places (name, province, description, image, map_url, category) VALUES (?, ?, ?, ?, ?, ?)';
+    db.query(sqlPlace, [name, province, description, mainImagePath, map_url, category], (err, result) => {
         if (err) throw err;
 
         const newPlaceId = result.insertId;
-
-        // ກຽມຂໍ້ມູນທຸກຮູບເພື່ອບັນທຶກລົງ table place_images (Gallery)
-        const galleryData = req.files.map(file => [
-            newPlaceId, 
-            '/uploads/' + file.filename
-        ]);
-
+        const galleryData = req.files.map(file => [newPlaceId, '/uploads/' + file.filename]);
         const sqlGallery = 'INSERT INTO place_images (place_id, image_url) VALUES ?';
         db.query(sqlGallery, [galleryData], (err) => {
             if (err) throw err;
             res.redirect('/places');
         });
     });
+});
+
+// ✅ POST /update-place/:id - ໂຄ້ດທີ່ຖືກຕ້ອງ
+app.post('/update-place/:id', isAdminMode, upload.array('images', 10), (req, res) => {
+    const { name, province, category, description, map_url } = req.body;
+    const id = req.params.id;
+
+    if (!name || !province) {
+        return res.status(400).send('ກະລຸນາປ້ອນຂໍ້ມູນໃຫ້ຄົບຖ້ວນ');
+    }
+
+    if (req.files && req.files.length > 0) {
+        const mainImagePath = '/uploads/' + req.files[0].filename;
+        const sqlPlace = 'UPDATE places SET name = ?, province = ?, category = ?, description = ?, image = ?, map_url = ? WHERE id = ?';
+        
+        db.query(sqlPlace, [name, province, category, description, mainImagePath, map_url, id], (err, result) => {
+            if (err) {
+                console.error('Update place error:', err);
+                return res.status(500).send('Server Error');
+            }
+
+            const sqlDelGallery = 'DELETE FROM place_images WHERE place_id = ?';
+            db.query(sqlDelGallery, [id], (err) => {
+                if (err) {
+                    console.error('Delete gallery error:', err);
+                    return res.status(500).send('Server Error');
+                }
+
+                const galleryData = req.files.map(file => [id, '/uploads/' + file.filename]);
+                if (galleryData.length > 0) {
+                    const sqlInsertGallery = 'INSERT INTO place_images (place_id, image_url) VALUES ?';
+                    db.query(sqlInsertGallery, [galleryData], (err) => {
+                        if (err) {
+                            console.error('Insert gallery error:', err);
+                            return res.status(500).send('Server Error');
+                        }
+                        res.redirect('/places');
+                    });
+                } else {
+                    res.redirect('/places');
+                }
+            });
+        });
+    } else {
+        const sql = 'UPDATE places SET name = ?, province = ?, category = ?, description = ?, map_url = ? WHERE id = ?';
+        db.query(sql, [name, province, category, description, map_url, id], (err, result) => {
+            if (err) {
+                console.error('Update place error:', err);
+                return res.status(500).send('Server Error');
+            }
+            if (result.affectedRows === 0) {
+                console.log('No changes made - data might be the same');
+            }
+            res.redirect('/places');
+        });
+    }
 });
 
 app.get('/delete-place/:id', isAdminMode, (req, res) => {
@@ -189,41 +228,46 @@ app.get('/edit-place/:id', isAdminMode, (req, res) => {
     });
 });
 
-app.post('/update-place/:id', isAdminMode, upload.array('images', 10), (req, res) => {
-    const { name, province, description, map_url } = req.body;
-    const id = req.params.id;
-
-    if (req.files && req.files.length > 0) {
-        // 1. ໃຊ້ຮູບທຳອິດເປັນຮູບໜ້າປົກ (ຄືກັນກັບຕອນ Add)
-        const mainImagePath = '/uploads/' + req.files[0].filename;
-
-        const sqlPlace = 'UPDATE places SET name = ?, province = ?, description = ?, image = ?, map_url = ? WHERE id = ?';
-        db.query(sqlPlace, [name, province, description, mainImagePath, map_url, id], (err, result) => {
-            if (err) throw err;
-
-            // 2. ລຶບຮູບເກົ່າໃນ Gallery ອອກກ່ອນ ແລ້ວແທນທີ່ດ້ວຍຮູບໃໝ່
-            const sqlDelGallery = 'DELETE FROM place_images WHERE place_id = ?';
-            db.query(sqlDelGallery, [id], (err) => {
-                if (err) throw err;
-
-                // 3. ເພີ່ມຮູບໃໝ່ທັງໝົດລົງໃນ Gallery (Table: place_images)
-                const galleryData = req.files.map(file => [id, '/uploads/' + file.filename]);
-                const sqlInsertGallery = 'INSERT INTO place_images (place_id, image_url) VALUES ?';
-                db.query(sqlInsertGallery, [galleryData], (err) => {
-                    if (err) throw err;
-                    res.redirect('/places');
-                });
-            });
+// ເພີ່ມ route ນີ້
+app.get('/places/:id', (req, res) => {
+    const sql = `
+        SELECT p.*, 
+               GROUP_CONCAT(pi.image_url SEPARATOR ',') as gallery_images
+        FROM places p
+        LEFT JOIN place_images pi ON p.id = pi.place_id
+        WHERE p.id = ?
+        GROUP BY p.id
+    `;
+    
+    db.query(sql, [req.params.id], (err, results) => {
+        if (err) {
+            console.error('Error fetching place details:', err);
+            return res.status(500).send('Database error');
+        }
+        
+        if (results.length === 0) {
+            return res.status(404).send('ບໍ່ພົບຂໍ້ມູນສະຖານທີ່');
+        }
+        
+        const place = results[0];
+        let images = [];
+        
+        // ສ້າງ array ຂອງຮູບພາບ
+        if (place.gallery_images) {
+            images = place.gallery_images.split(',');
+        }
+        
+        res.render('place-detail', { 
+            title: place.name, 
+            active: 'places', 
+            place: place,
+            images: images,  // ສົ່ງເປັນ array ຂອງ strings
+            isAdmin: req.session.isAdmin
         });
-    } else {
-        // ຖ້າບໍ່ມີການເລືອກຮູບໃໝ່ ໃຫ້ອັບເດດແຕ່ຂໍ້ມູນຕົວໜັງສື
-        const sql = 'UPDATE places SET name = ?, province = ?, description = ?, map_url = ? WHERE id = ?';
-        db.query(sql, [name, province, description, map_url, id], (err, result) => {
-            if (err) throw err;
-            res.redirect('/places');
-        });
-    }
+    });
 });
+
+
 
 app.get('/about', (req, res) => {
     res.render('about', { title: 'ກ່ຽວກັບເຮົາ', active: 'about' });

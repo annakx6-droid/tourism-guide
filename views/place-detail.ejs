@@ -24,9 +24,9 @@
     <% if (images && images.length > 0) { %>
         <% images.forEach((img, index) => { %>
             <div class="carousel-item <%= index === 0 ? 'active' : '' %>">
-                <img src="/<%= img.image_url.replace(/^\/+/, '') %>" 
-                     class="d-block w-100"
-                     style="max-height: 500px; object-fit: cover;">
+                <img src="/<%= img.replace(/^\//, '') %>"  
+                    class="d-block w-100"
+                    style="max-height: 500px; object-fit: cover;">
             </div>
         <% }); %>
     <% } else { %>
@@ -69,6 +69,19 @@
                             </div>
                         <% } %>
                     </div>
+
+                    <% if (isAdmin) { %>
+                        <div class="d-flex gap-2 mt-4 pt-3 border-top">
+                            <a href="/edit-place/<%= place.id %>" class="btn btn-warning flex-fill">
+                                <i class="bi bi-pencil"></i> ແກ້ໄຂ
+                            </a>
+                            <a href="/delete-place/<%= place.id %>" 
+                            class="btn btn-danger flex-fill"
+                            onclick="return confirm('ຢືນຢັນການລຶບຂໍ້ມູນນີ້?')">
+                                <i class="bi bi-trash"></i> ລຶບ
+                            </a>
+                        </div>
+                        <% } %>
                 </div>
             </div>
         </div>
